@@ -218,7 +218,7 @@ class PublicPark {
 }
 ```
 
-## **Naming**
+## **Naming and Declarations**
 
 A famous [quote](https://martinfowler.com/bliki/TwoHardThings.html) in computer science reads:
 
@@ -230,18 +230,22 @@ Coming up with good names for functions, classes, enums, and files is difficult.
 [[maybe_unused]] [[nodiscard]] virtual const/constexpr volatile static inline auto/unsigned long long int* const function() const noexcept override;
 ```
 
-- For variables, use nouns in lower_snake_case or lowerCamelCase. It should answer the question "What is this?" If it is a boolean, prefix the name with the words "is," "has," or similar.
+- For variables, use nouns in lower_snake_case or lowerCamelCase. It should answer the question "What is this?" If it is a boolean, prefix the name with the words "is," "has," or similar. Do not use `auto` unless you're sure of what you're getting back (see the "*Things to never do* section for why). You may also use structured bindings, if you wish. Use `const` as much as possible; if your variable isn't supposed to change, then guarantee it by declaring it `const` so that you don't make a mistake down the line.
+
     - A count of rubber ducks: `unsigned num_ducks = 0;`
     - A player's score in a Player struct: `double score = 1.0;`
-    - The name of a book: `std::string bookTitle = "The Count of Monte Cristo";`
+    - The name of a book: `const std::string bookTitle = "The Count of Monte Cristo";`
     - A boolean checking if a Player is a winner: `bool is_winner;`
+    - A variable using type inference: `auto board = boardCopy.get2DVector();`
+    - Structured binding, assuming `getDimensions()` returns a `std::pair<int, int>`: `const auto [x, y] = getDimensions()`
 
-- For functions, use verbs combined with a noun in lowerCamelCase. The name should answer the question "What does this do?" Prefix the function with [[maybe_unused]] if it isn't being used by your code, and [[nodiscard]] if the return value should always be used.
+- For functions, use verbs combined with a noun in lowerCamelCase. The name should answer the question "What does this do?" Prefix the function with [[maybe_unused]] if it isn't being used by your code, and [[nodiscard]] if the return value should always be used. Avoid using trailing return types. If the function makes no changes to any parameters, declare the parameters `const`. If the function makes no changes to member variables, declare the function `const`. 
 
     - A function that combines two vectors: `[[nodiscard]] std::vector<int> combine(std::vector<int> first_vector, std::vector<int> second_vector);`
     - A function that renders a main menu window on the screen: `void renderMainMenu(sf::RenderWindow& window);`
     - A function that pauses the game: `void pause(Game* game)`
-    - A function that calculates the average of a vector: `[[nodiscard]] double getAverage(std::vector<double> scores);`
+    - A function that calculates the average of a vector: `[[nodiscard]] double getAverage(const std::vector<double>& scores) const;`
+    - Do not declare functions with trailing return types: `auto function(int param) -> std::string;`
 
 - Classes, structs, and aliased types should be in PascalCase.
     - A class of a duck pond: `class DuckPond`
@@ -535,7 +539,7 @@ Some things in C++ were useful in a by-gone era, but are now dangerous [footguns
     - The C/C++ preprocessor is pretty stupid. Any time you use a `#define` constant, it's essentially copy-pasting that snippet into your code, which can lead to problems when dealing with operator precedence. Use `constexpr` or an `enum class` to declare constants instead.
 
 - `using namespace`, especially in a header file
-    - While handy, the `using namespace` causes namespace collisions, which can lead to incorrect functions being called. If you don't want to type `std::` before every STL function and type, use a `typedef` or a non-namespace `using`.
+    - While handy, the `using namespace` causes namespace collisions, which can lead to incorrect functions being called. If you don't want to type `std::` before every STL function and type, use a non-namespace `using`.
     ```cpp
     #include <algorithm>
     using namespace std;
@@ -560,6 +564,23 @@ Some things in C++ were useful in a by-gone era, but are now dangerous [footguns
 
 - `malloc`, `realloc`, `calloc`, and `free`
     - These C functions are superseded by `new` and `delete`, and don't play nicely with classes.
+
+- `typedef`
+    - Again, this C keyword is superseded by the `using` keyword, which has an easier syntax and is much more versatile.
+
+- Excessive use of `auto`, especially on built-in types
+
+    While the `auto` keyword is nice, it can be another footgun source. Let's play a guessing game to see why. All you need to do is guess what type the `auto` keyword declares in the following code block.
+
+    ```cpp
+    auto number = -1;
+    auto another_number = 10000000000;
+    auto str = "Text";
+    ```
+    Were your answers `int`, `long`, and `const char*`? You probably got the last one wrong. By turning off our static-typing, we get unexpected behavior. Don't use `auto` unless you know *exactly* what you're getting back.
+
+
+
 
 ## **Closing Comments**
 
