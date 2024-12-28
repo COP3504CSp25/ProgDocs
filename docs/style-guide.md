@@ -31,7 +31,7 @@ switch (static_cast<Image>(image_type)) {
 }
 ```
 
-We will be using industry-standard tools to analyze your code, perhaps including clang-tidy, and cppcheck. We recommend installing these utilities. Additionally, we will be compiling your code with the `-Wall, -Wpedantic, -Wextra, -std=c++20` flags, so it's recommended that you compile with those flags as well.
+We will be using industry-standard tools to analyze your code, perhaps including clang-tidy, and cppcheck. We recommend installing these utilities. Additionally, we will be compiling your code with the `-Wall, -Wpedantic, -Wextra, -std=c++20` flags, so it's recommended that you compile with those flags as well. Your grade is affected by how many warnings you have in your files, so be sure to resolve them when they appear.
 
 ## Indentation, Braces, and Whitespace
 
@@ -579,7 +579,9 @@ Some things in C++ were useful in a by-gone era, but are now dangerous [footguns
     ```
     Were your answers `int`, `long`, and `const char*`? You probably got the last one wrong. By turning off our static-typing, we get unexpected behavior. Don't use `auto` unless you know *exactly* what you're getting back.
 
+- Ignoring or suppressing compiler or linter warnings
 
+    Warnings are meant to let you know that something is probably not what you want. The compiler and linter are nearly always smarter than us mortals, so suppress warnings with caution. Remember that we will be using those tools to check the quality of your code. We're also going to check for suppression comments, so make sure you have a good reason if you suppress a warning.
 
 
 ## **Closing Comments**
