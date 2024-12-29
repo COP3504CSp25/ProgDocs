@@ -521,9 +521,7 @@ More is less when commenting, as comments themselves can get bugs when the code 
     }
     ```
 
-    For further reading about RMEs, read the University of Illinois' synopsis on them:
-
-    <https://www.cs128live.org/course-book/resource/RMEs>
+    For further reading about RMEs, read the University of Illinois' [synopsis](https://www.cs128live.org/course-book/resource/RMEs) on them.
 
 - ### **Doxygen**
 
@@ -606,7 +604,7 @@ Some things in C++ were useful in a by-gone era, but are now dangerous [footguns
 
 ## **Closing Comments**
 
-If a style guideline isn't found here, follow the ISO C++ guidelines found at <https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines> and open a ticket on the class Discord so we can resolve it here.
+If a style guideline isn't found here, follow the ISO C++ [guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) and open a ticket on the class Discord so we can resolve it.
 
 ## **Credits**
 
