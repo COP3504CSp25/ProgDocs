@@ -20,14 +20,17 @@ While C++ style guidelines are unfortunately not standardized between profession
 switch (static_cast<Image>(image_type)) {
     case PNG:
         std::cout << "PNG\n";
+        return portable network graphics;
     case JPEG:
         std::cout << "JPEG\n";
+        return "joint photographic experts group";
     case WEBP:
         std::cout << "WEBP\n";
+        return "web picture";
     default:
         // While the default case is unreachable, it resolves a GCC/Clang
         // warning saying that "not all control paths return a value"
-        return nullptr;
+        return "not an image format";
 }
 ```
 
@@ -75,7 +78,7 @@ Use the [One True Brace Style](https://en.wikipedia.org/wiki/Indentation_style#O
 
 ```cpp
 // Function's first brace on the same line as its signature
-std::vector<int>& n_squared_sort(std::vector<int>& vec) {
+std::vector<int>& nSquaredSort(std::vector<int>& vec) {
     // Brace on same line as loop
     for (size_t i = 0; i < vec.size() - 1; ++i) {
         bool is_swapped = false;
@@ -104,7 +107,7 @@ You may also use the [Allman](https://en.wikipedia.org/wiki/Indentation_style#Al
 
 ```cpp
 // Brace follows declaration
-std::vector<int>& n_squared_sort(std::vector<int>& vec) 
+std::vector<int>& nSquaredSort(std::vector<int>& vec) 
 {
     // Brace on next line
     for (size_t i = 0; i < vec.size() - 1; ++i) 
@@ -199,7 +202,7 @@ int main() {
 }
 ```
 
-For preprocessor directives, separate them from your main code with a blank line. Separate groups of directives with a blank line as well. Order your directives by the following order, alphabetized:
+For preprocessor directives, separate them from your main code with a blank line. Separate groups of directives with a blank line as well. Order your directives by the following order, with includes alphabetized:
 
 1. include guards (`#ifndef`, `#pragma once`)
 2. STL includes
@@ -281,7 +284,7 @@ Coming up with good names for functions, classes, enums, and files is difficult.
     ```
 
     ```cpp
-        bool checkScoreValidity(const std::vector<int>& scores) {
+    bool checkScoreValidity(const std::vector<int>& scores) {
         constexpr int MAX_SAT_SCORE = 1600;
         for (const int score : scores) {
             // Much clearer
@@ -597,6 +600,14 @@ Some things in C++ were useful in a by-gone era, but are now dangerous [footguns
     ```
 
     Were your answers `int`, `long`, and `const char*`? You probably got the last one wrong. By turning off our static-typing, we get unexpected behavior. Don't use `auto` unless you know *exactly* what you're getting back.
+
+- Multiple pointer declarations per line
+  This leads to unreadable code, plain and simple. See the following:
+  ```cpp
+  int* first_ptr, second_ptr; // first_ptr is a pointer to an int, but second_ptr is a plain int
+  int *first_ptr, *second_ptr // Both pointers, expected
+  int* first_ptr, *second_Ptr // Both pointers, but ugly
+  ```
 
 - Ignoring or suppressing compiler or linter warnings
 
